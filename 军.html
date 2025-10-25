@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钢铁熔炉新兵连 - 官方网站</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        }
+        
+        body {
+            background-color: #0a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        /* 军事风格配色 */
+        :root {
+            --army-green: #2d4a2d;
+            --army-dark: #1a2a1a;
+            --army-light: #4a6a4a;
+            --army-gold: #b8860b;
+            --army-red: #8b0000;
+            --text-light: #e0e0e0;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(to bottom, var(--army-dark), var(--army-green));
+            padding: 20px 0;
+            border-bottom: 3px solid var(--army-gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--army-gold), #8b6914);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            border: 2px solid var(--army-gold);
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+        }
+        
+        .logo-inner {
+            width: 50px;
+            height: 50px;
+            background-color: var(--army-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--army-gold);
+            font-weight: bold;
+            font-size: 12px;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .site-title {
+            text-align: center;
+        }
+        
+        .site-title h1 {
+            color: var(--army-gold);
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 5px;
+        }
+        
+        .site-title p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+        
+        /* 导航栏 */
+        nav {
+            background-color: rgba(26, 42, 26, 0.9);
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        .nav-menu li {
+            position: relative;
+        }
+        
+        .nav-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-right: 1px solid rgba(184, 134, 11, 0.3);
+        }
+        
+        .nav-menu li:last-child a {
+            border-right: none;
+        }
+        
+        .nav-menu a:hover {
+            background-color: var(--army-green);
+            color: var(--army-gold);
+        }
+        
+        /* 主要内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        /* 通知栏 */
+        .alert-bar {
+            background-color: var(--army-red);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--army-gold);
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* 主要内容 */
+        .main-content {
+            background-color: rgba(26, 42, 26, 0.7);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            color: var(--army-gold);
+            border-bottom: 2px solid var(--army-gold);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        /* 轮播图 */
+        .carousel {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .slide-content {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        .slide-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* 新闻区 */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .news-card {
+            background-color: rgba(45, 74, 45, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--army-gold);
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-card h3 {
+            color: var(--army-gold);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .news-card p {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        
+        .news-date {
+            display: inline-block;
+            background-color: var(--army-dark);
+            color: var(--army-gold);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            background-color: rgba(26, 42, 26, 0.7);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .commander-card {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+        }
+        
+        .commander-photo {
+            width: 150px;
+            height: 180px;
+            margin: 0 auto 15px;
+            background: linear-gradient(145deg, var(--army-green), var(--army-dark));
+            border: 3px solid var(--army-gold);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--army-gold);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .commander-info h3 {
+            color: var(--army-gold);
+            margin-bottom: 5px;
+        }
+        
+        .commander-info p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .sidebar-widget {
+            margin-bottom: 25px;
+        }
+        
+        .sidebar-widget h3 {
+            color: var(--army-gold);
+            border-bottom: 1px solid var(--army-gold);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .sidebar-list {
+            list-style: none;
+        }
+        
+        .sidebar-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .sidebar-list a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .sidebar-list a:hover {
+            color: var(--army-gold);
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--army-dark);
+            padding: 30px 0 20px;
+            margin-top: 50px;
+            border-top: 3px solid var(--army-gold);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            color: var(--army-gold);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        
+        .footer-section a {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .footer-section a:hover {
+            color: var(--army-gold);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+            }
+            
+            .nav-menu a {
+                border-right: none;
+                border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+            }
+            
+            .carousel {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .logo-title {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .site-title h1 {
+                font-size: 2rem;
+            }
+            
+            .carousel {
+                height: 250px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header>
+        <div class="header-content">
+            <div class="logo-title">
+                <div class="logo">
+                    <div class="logo-inner">钢铁熔炉<br>新兵连</div>
+                </div>
+                <div class="site-title">
+                    <h1>钢铁熔炉新兵连</h1>
+                    <p>从这里走向战场</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">连队概况</a></li>
+                    <li><a href="#">新闻动态</a></li>
+                    <li><a href="#">英模风采</a></li>
+                    <li><a href="#">光影记忆</a></li>
+                    <li><a href="#">兵情动态</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <div class="container">
+        <main class="main-content">
+            <!-- 通知栏 -->
+            <div class="alert-bar">
+                【紧急通知】关于组织野外拉练的预先号令 | 【表彰通报】猎豹突击队队长王宇晨同志记连嘉奖一次
+            </div>
+            
+            <!-- 轮播图 -->
+            <div class="carousel">
+                <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800\" height=\"400\" viewBox=\"0 0 800 400\"><rect width=\"800\" height=\"400\" fill=\"%232d4a2d\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"%23b8860b\" text-anchor=\"middle\">新兵训练场景</text></svg>');">
+                    <div class="slide-content">
+                        <h3>首战用我，用我必胜</h3>
+                        <p>新兵连开展高强度实战化训练，锤炼打赢能力</p>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800\" height=\"400\" viewBox=\"0 0 800 400\"><rect width=\"800\" height=\"400\" fill=\"%231a2a1a\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"%23b8860b\" text-anchor=\"middle\">猎豹突击队成立</text></svg>');">
+                    <div class="slide-content">
+                        <h3>猎豹突击队正式成立</h3>
+                        <p>王宇晨同志被任命为猎豹突击队首任队长</p>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"800\" height=\"400\" viewBox=\"0 0 800 400\"><rect width=\"800\" height=\"400\" fill=\"%234a6a4a\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"24\" fill=\"%23b8860b\" text-anchor=\"middle\">授衔仪式</text></svg>');">
+                    <div class="slide-content">
+                        <h3>一道拐的青春，不一样的热血</h3>
+                        <p>新兵授衔仪式隆重举行，光荣与责任并存</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 新闻区 -->
+            <h2 class="section-title">连队要闻</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <h3>新兵连召开"猎豹突击队"成立大会</h3>
+                    <p>今日，新兵连隆重举行"猎豹突击队"成立大会，任命王宇晨同志为首任队长。该突击队将承担急难险重任务，成为新兵连的尖刀力量。</p>
+                    <span class="news-date">2023-10-26</span>
+                </div>
+                
+                <div class="news-card">
+                    <h3>我连在团建制比武中荣获"综合优胜单位"</h3>
+                    <p>在刚刚结束的团建制比武中，我新兵连官兵团结一心，奋勇拼搏，最终荣获"综合优胜单位"流动红旗，展现了过硬的军事素质。</p>
+                    <span class="news-date">2023-10-20</span>
+                </div>
+                
+                <div class="news-card">
+                    <h3>"传承红色基因，担当强军重任"主题教育活动</h3>
+                    <p>我连组织开展"传承红色基因，担当强军重任"主题教育活动，通过参观荣誉室、聆听老兵故事等形式，筑牢官兵思想根基。</p>
+                    <span class="news-date">2023-10-15</span>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="commander-card">
+                <div class="commander-photo">
+                    王宇晨同志<br>猎豹突击队队长
+                </div>
+                <div class="commander-info">
+                    <h3>王宇晨 队长</h3>
+                    <p>猎豹突击队首任队长</p>
+                    <p>荣获连嘉奖一次</p>
+                </div>
+            </div>
+            
+            <div class="sidebar-widget">
+                <h3>关于猎豹突击队</h3>
+                <p>猎豹突击队是新兵连为应对急难险重任务而组建的特战分队，代号"猎豹"。队员从各班级选拔精锐组成，以反应迅速、战斗力强著称。</p>
+            </div>
+            
+            <div class="sidebar-widget">
+                <h3>快速链接</h3>
+                <ul class="sidebar-list">
+                    <li><a href="#">训练计划安排</a></li>
+                    <li><a href="#">内务卫生评比</a></li>
+                    <li><a href="#">军事理论考核</a></li>
+                    <li><a href="#">武器装备介绍</a></li>
+                    <li><a href="#">心理疏导服务</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-widget">
+                <h3>荣誉榜</h3>
+                <ul class="sidebar-list">
+                    <li><a href="#">训练标兵：张伟</a></li>
+                    <li><a href="#">内务之星：李明</a></li>
+                    <li><a href="#">理论能手：赵刚</a></li>
+                    <li><a href="#">射击冠军：刘强</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>钢铁熔炉新兵连是一支有着光荣传统和优良作风的部队，致力于培养政治合格、军事过硬、作风优良、纪律严明的新时代革命军人。</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>快速导航</h3>
+                <a href="#">连队概况</a>
+                <a href="#">新闻动态</a>
+                <a href="#">英模风采</a>
+                <a href="#">光影记忆</a>
+                <a href="#">规章制度</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>联系我们</h3>
+                <p>地址：某军区新兵训练基地</p>
+                <p>邮箱：xbl@example.com</p>
+                <p>电话：XXXX-XXXXXXX</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 钢铁熔炉新兵连 版权所有</p>
+        </div>
+    </footer>
+
+    <script>
+        // 轮播图功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            let currentSlide = 0;
+            
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+            
+            // 自动轮播
+            setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+            
+            // 通知栏滚动效果
+            const alertBar = document.querySelector('.alert-bar');
+            let scrollPos = 0;
+            
+            function scrollAlert() {
+                scrollPos -= 1;
+                if (scrollPos < -alertBar.scrollWidth) {
+                    scrollPos = window.innerWidth;
+                }
+                alertBar.style.transform = `translateX(${scrollPos}px)`;
+                requestAnimationFrame(scrollAlert);
+            }
+            
+            // 启动通知栏滚动
+            scrollAlert();
+        });
+    </script>
+</body>
+</html>
