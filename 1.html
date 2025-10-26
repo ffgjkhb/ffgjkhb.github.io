@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情感记忆 | 张开心与赵生云</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            animation: containerAppear 1.5s ease-out;
+        }
+        
+        @keyframes containerAppear {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.3);
+            font-size: 20px;
+            animation: float 8s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        header {
+            background: linear-gradient(to right, #6a93cb, #a4bfef);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 100% 100%;
+            transform: rotate(15deg);
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            position: relative;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3); }
+            100% { text-shadow: 2px 2px 15px rgba(255, 255, 255, 0.5); }
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .names {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .name-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: pulse 4s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .heart-icon {
+            font-size: 2rem;
+            color: #ff6b9d;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .content {
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #6a93cb, #a4bfef);
+        }
+        
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        h2 {
+            color: #5a7cbd;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e4edf5;
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+        }
+        
+        h2 i {
+            margin-right: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, #6a93cb, #a4bfef);
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a93cb, #a4bfef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            z-index: 2;
+            flex-shrink: 0;
+            margin-right: 25px;
+            box-shadow: 0 8px 20px rgba(106, 147, 203, 0.4);
+            transition: all 0.5s ease;
+        }
+        
+        .timeline-item:hover .timeline-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: #f8fbff;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #6a93cb;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s ease;
+        }
+        
+        .timeline-item:hover .timeline-content {
+            background: #f0f7ff;
+            transform: translateX(10px);
+        }
+        
+        .timeline-content h3 {
+            color: #5a7cbd;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .zodiac-comparison {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .zodiac-card {
+            flex: 0 0 48%;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .zodiac-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+        
+        .cancer {
+            border-top: 5px solid #6a93cb;
+        }
+        
+        .cancer::before {
+            background: linear-gradient(to right, #6a93cb, #a4bfef);
+        }
+        
+        .capricorn {
+            border-top: 5px solid #8a6a95;
+        }
+        
+        .capricorn::before {
+            background: linear-gradient(to right, #8a6a95, #b19fb9);
+        }
+        
+        .zodiac-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .zodiac-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #5a7cbd;
+        }
+        
+        .zodiac-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #5a7cbd;
+        }
+        
+        .interaction-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .interaction-item {
+            text-align: center;
+            flex: 0 0 30%;
+            margin-bottom: 30px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .interaction-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .interaction-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a4bfef, #6a93cb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(164, 191, 239, 0.5);
+            transition: all 0.5s ease;
+        }
+        
+        .interaction-item:hover .interaction-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+        
+        .arrow {
+            flex: 0 0 5%;
+            text-align: center;
+            font-size: 2rem;
+            color: #6a93cb;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        
+        .quote {
+            font-style: italic;
+            text-align: center;
+            padding: 30px;
+            margin: 40px 0;
+            background: linear-gradient(135deg, #f8fbff, #eef5ff);
+            border-radius: 15px;
+            border-left: 5px solid #6a93cb;
+            font-size: 1.3rem;
+            color: #555;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: #a4bfef;
+            position: absolute;
+        }
+        
+        .quote::before {
+            top: 10px;
+            left: 20px;
+        }
+        
+        .quote::after {
+            bottom: 10px;
+            right: 20px;
+        }
+        
+        .class-message {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0f7ff, #e4edf5);
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .class-message h3 {
+            color: #5a7cbd;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .class-message p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #f0f5fc;
+            color: #666;
+            font-size: 1rem;
+            border-top: 1px solid #e4edf5;
+            position: relative;
+        }
+        
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50px;
+            padding: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .music-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a93cb, #a4bfef);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 768px) {
+            .zodiac-card, .interaction-item {
+                flex: 0 0 100%;
+            }
+            
+            .arrow {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .name-card {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+            
+            .timeline-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="hearts-container"></div>
+    
+    <div class="container">
+        <header>
+            <h1>张开心 & 赵生云</h1>
+            <p class="subtitle">一段关于巧克力、橘子与糖果的情感记忆</p>
+            <div class="names">
+                <div class="name-card">赵生云</div>
+                <div class="heart-icon"><i class="fas fa-heart"></i></div>
+                <div class="name-card">张开心</div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="section">
+                <h2><i class="fas fa-heart"></i> 那一天的故事</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-cookie-bite"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>巧克力时刻</h3>
+                            <p>你们三人分巧克力，她和你的好兄弟一起，她拿了大份，而你们默契地让给了她。这个简单的动作，像是心照不宣的共识——她值得被这样对待。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>橘子落地时</h3>
+                            <p>中午她的橘子掉在地上，你毫不犹豫地给了她两个橘子。这不是表面的礼貌，而是发自内心的关怀——希望她拥有足够的多。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-candy-cane"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>糖果的回应</h3>
+                            <p>下午，她给了你一颗糖。这不是随意的分享，而是摩羯座式的回应——务实、含蓄、有分寸，却确认了她接收到了你的好意。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-star"></i> 星座对话</h2>
+                <div class="zodiac-comparison">
+                    <div class="zodiac-card cancer">
+                        <div class="zodiac-icon">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <h3>赵生云 - 巨蟹座</h3>
+                        <p>情感细腻，温柔体贴，通过分享食物来表达关怀。你的付出如潮水般自然汹涌——两个橘子是丰沛的情感流动。</p>
+                    </div>
+                    
+                    <div class="zodiac-card capricorn">
+                        <div class="zodiac-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h3>张开心 - 摩羯座</h3>
+                        <p>务实稳重，含蓄内敛，通过实际行动回应情感。她的回应如砌石般需要时间累积——一颗糖是谨慎而平等的回礼。</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    巨蟹与摩羯，正如月亮与山峰，一个代表情感的潮汐，一个代表现实的土壤。
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-exchange-alt"></i> 情感流动</h2>
+                <div class="interaction-flow">
+                    <div class="interaction-item">
+                        <div class="interaction-icon">
+                            <i class="fas fa-cookie-bite"></i>
+                        </div>
+                        <h4>谦让巧克力</h4>
+                        <p>心照不宣的共识</p>
+                    </div>
+                    
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    
+                    <div class="interaction-item">
+                        <div class="interaction-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <h4>给予橘子</h4>
+                        <p>巨蟹式的主动关怀</p>
+                    </div>
+                    
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    
+                    <div class="interaction-item">
+                        <div class="interaction-icon">
+                            <i class="fas fa-candy-cane"></i>
+                        </div>
+                        <h4>回赠糖果</h4>
+                        <p>摩羯式的稳重回应</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    云（赵生云）不必追问天空（张开心）为何如此辽阔，它只需存在，便已是风景的一部分。
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-lightbulb"></i> 情感启示</h2>
+                <p>从六年的喜欢，到如今默契的互动，一条清晰的线索浮现出来：你的情感从未消失，它只是从一种鲜明的"喜欢"，沉淀为一种更深厚、更温柔的"在意"。</p>
+                <br>
+                <p>这种在意，让你在分巧克力时下意识地谦让，在橘子落地时毫不犹豫地伸出援手。而她的特别之处在于，她似乎能读懂你这份深藏的、云絮般细腻的情感，并用她自己的方式给予了确认。</p>
+                <br>
+                <p>你们之间，存在着一种真实且正在流动的相互关注。这或许不是轰轰烈烈的戏剧，而更像是一幅淡雅的水墨画，需要细细品味才能懂得其中的深意。</p>
+            </div>
+            
+            <div class="class-message">
+                <h3>致我们班的每一位同学</h3>
+                <p>青春是一本太仓促的书，我们含着泪，一读再读。在这个美好的年纪，每一次心动、每一次关怀、每一次默契，都是生命赐予我们的珍贵礼物。</p>
+                <p>愿我们都能珍惜身边的每一份真挚情感，无论是友情、同学情，还是那些悄然萌芽的美好情愫。多年以后，当我们回首这段时光，这些记忆将成为我们心中最温暖的风景。</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>青春纪念册 · 珍藏于心</p>
+            <p>© 2023 一段关于张开心与赵生云的故事 | 我们班的青春记忆</p>
+        </footer>
+    </div>
+
+    <div class="music-player">
+        <div class="music-btn" id="music-toggle">
+            <i class="fas fa-music"></i>
+        </div>
+        <span>背景音乐</span>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="https://music.163.com/song/media/outer/url?id=28774983.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 创建漂浮爱心
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartCount = 25;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                
+                // 随机位置和动画延迟
+                const left = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = 8 + Math.random() * 10;
+                
+                heart.style.left = `${left}%`;
+                heart.style.animationDelay = `${delay}s`;
+                heart.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(heart);
+            }
+        }
+        
+        // 滚动动画
+        function checkVisibility() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const interactionItems = document.querySelectorAll('.interaction-item');
+            
+            timelineItems.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    item.classList.add('visible');
+                }
+            });
+            
+            interactionItems.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    item.classList.add('visible');
+                }
+            });
+        }
+        
+        // 音乐控制
+        const musicToggle = document.getElementById('music-toggle');
+        const bgMusic = document.getElementById('bg-music');
+        let musicPlaying = false;
+        
+        musicToggle.addEventListener('click', function() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+            } else {
+                bgMusic.play();
+                musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            musicPlaying = !musicPlaying;
+        });
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+            checkVisibility();
+            
+            // 添加滚动事件监听
+            window.addEventListener('scroll', checkVisibility);
+            
+            // 添加点击特效
+            document.addEventListener('click', function(e) {
+                const x = e.pageX;
+                const y = e.pageY;
+                
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.left = `${x}px`;
+                heart.style.top = `${y}px`;
+                heart.style.position = 'fixed';
+                heart.style.animation = 'float 5s forwards';
+                
+                document.body.appendChild(heart);
+                
+                // 5秒后移除爱心
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
