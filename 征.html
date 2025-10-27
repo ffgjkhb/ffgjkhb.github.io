@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>征兵网 - 猎豹突击队与作战支援大队</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "SimHei", sans-serif;
+        }
+        
+        body {
+            background-color: #0a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(10, 26, 26, 0.9), rgba(10, 26, 26, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a2a1a"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%232d4a2d" stroke-width="1"/></svg>');
+        }
+        
+        /* 军事风格配色 */
+        :root {
+            --army-green: #2d4a2d;
+            --army-dark: #1a2a1a;
+            --army-light: #4a6a4a;
+            --army-gold: #b8860b;
+            --army-red: #8b0000;
+            --text-light: #e0e0e0;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(to bottom, var(--army-dark), var(--army-green));
+            padding: 20px 0;
+            border-bottom: 3px solid var(--army-gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--army-gold), #8b6914);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            border: 2px solid var(--army-gold);
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+            overflow: hidden;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .site-title {
+            text-align: center;
+        }
+        
+        .site-title h1 {
+            color: var(--army-gold);
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 5px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .site-title p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 导航栏 */
+        nav {
+            background-color: rgba(26, 42, 26, 0.9);
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+            animation: slideIn 1s ease-out 0.6s both;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        .nav-menu li {
+            position: relative;
+        }
+        
+        .nav-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-right: 1px solid rgba(184, 134, 11, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(184, 134, 11, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-menu a:hover::before {
+            left: 100%;
+        }
+        
+        .nav-menu li:last-child a {
+            border-right: none;
+        }
+        
+        .nav-menu a:hover {
+            background-color: var(--army-green);
+            color: var(--army-gold);
+            transform: translateY(-2px);
+        }
+        
+        /* 主要内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        /* 通知栏 */
+        .alert-bar {
+            background-color: var(--army-red);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--army-gold);
+            animation: blink 2s infinite, slideInRight 1s ease-out;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        /* 征兵横幅 */
+        .recruitment-banner {
+            background: linear-gradient(135deg, var(--army-dark), var(--army-green));
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            border: 2px solid var(--army-gold);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            animation: zoomIn 1s ease-out;
+        }
+        
+        .recruitment-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(184, 134, 11, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .recruitment-banner h2 {
+            color: var(--army-gold);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            }
+            to {
+                text-shadow: 2px 2px 20px rgba(184, 134, 11, 0.8);
+            }
+        }
+        
+        .recruitment-banner p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to bottom, var(--army-gold), #8b6914);
+            color: var(--army-dark);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 2px solid var(--army-gold);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(184, 134, 11, 0.5);
+        }
+        
+        /* 部队展示区 */
+        .units-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .unit-card {
+            background-color: rgba(26, 42, 26, 0.7);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border-top: 5px solid var(--army-gold);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(184, 134, 11, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .unit-card:hover::before {
+            opacity: 1;
+        }
+        
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+        }
+        
+        .unit-card h3 {
+            color: var(--army-gold);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .unit-card h3 i {
+            margin-right: 10px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        
+        .unit-card p {
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+        
+        .unit-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .unit-features li {
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .unit-features li:hover {
+            transform: translateX(10px);
+            color: var(--army-gold);
+        }
+        
+        .unit-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .unit-features li i {
+            color: var(--army-gold);
+            margin-right: 10px;
+        }
+        
+        .unit-button {
+            display: inline-block;
+            background-color: var(--army-green);
+            color: var(--text-light);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--army-gold);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .unit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(184, 134, 11, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .unit-button:hover::before {
+            left: 100%;
+        }
+        
+        .unit-button:hover {
+            background-color: var(--army-gold);
+            color: var(--army-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* 申请表单 */
+        .application-section {
+            background-color: rgba(26, 42, 26, 0.7);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .application-section h2 {
+            color: var(--army-gold);
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid var(--army-gold);
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--army-gold);
+            font-weight: bold;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(45, 74, 45, 0.5);
+            border: 1px solid var(--army-light);
+            border-radius: 5px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--army-gold);
+            box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+            transform: scale(1.02);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .submit-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(to bottom, var(--army-gold), #8b6914);
+            color: var(--army-dark);
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .submit-button:hover::before {
+            left: 100%;
+        }
+        
+        .submit-button:hover {
+            background: linear-gradient(to bottom, #d4af37, var(--army-gold));
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .submit-button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* 加载动画 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--army-dark);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+            border-top: 3px solid var(--army-gold);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            color: var(--army-gold);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        
+        .footer-section a {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--army-gold);
+            transform: translateX(5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .units-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+            }
+            
+            .nav-menu a {
+                border-right: none;
+                border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .logo-title {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .site-title h1 {
+                font-size: 2rem;
+            }
+            
+            .recruitment-banner h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header>
+        <div class="header-content">
+            <div class="logo-title">
+                <div class="logo">
+                    <img src="https://ffgjkhb.github.io/%E5%85%AB%E4%B8%80.jpg" alt="八一徽章">
+                </div>
+                <div class="site-title">
+                    <h1>中国人民解放军征兵网</h1>
+                    <p>猎豹突击队 · 作战支援大队</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#"><i class="fas fa-home"></i> 首页</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> 关于我们</a></li>
+                    <li><a href="#"><i class="fas fa-tasks"></i> 征兵条件</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> 部队介绍</a></li>
+                    <li><a href="#application"><i class="fas fa-file-alt"></i> 在线申请</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> 联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <div class="container">
+        <!-- 通知栏 -->
+        <div class="alert-bar">
+            【征兵公告】2023年度秋季征兵工作已全面启动，欢迎有志青年报名参军！
+        </div>
+        
+        <!-- 征兵横幅 -->
+        <div class="recruitment-banner">
+            <h2>加入我们，保家卫国！</h2>
+            <p>中国人民解放军猎豹突击队与作战支援大队现面向全国招募优秀青年。如果你有强健的体魄、坚定的意志和报效祖国的决心，我们期待你的加入！</p>
+            <a href="#application" class="cta-button">立即报名参军</a>
+        </div>
+        
+        <!-- 部队展示区 -->
+        <div class="units-section">
+            <div class="unit-card">
+                <h3><i class="fas fa-paw"></i> 猎豹突击队</h3>
+                <p>猎豹突击队是陆军精锐特种作战部队，以快速反应、精准打击和全天候作战能力著称。队员经过严格选拔和特种训练，能够在各种复杂环境下执行高难度任务。</p>
+                <ul class="unit-features">
+                    <li><i class="fas fa-check"></i> 特种作战与反恐任务</li>
+                    <li><i class="fas fa-check"></i> 敌后侦察与情报收集</li>
+                    <li><i class="fas fa-check"></i> 高难度目标突击</li>
+                    <li><i class="fas fa-check"></i> 全天候全地形作战</li>
+                    <li><i class="fas fa-check"></i> 国际军事交流与合作</li>
+                </ul>
+                <a href="#" class="unit-button">了解更多</a>
+            </div>
+            
+            <div class="unit-card">
+                <h3><i class="fas fa-hands-helping"></i> 作战支援大队</h3>
+                <p>作战支援大队是现代化战争中不可或缺的力量，负责为前线部队提供全方位的后勤、技术、情报和火力支援，确保作战行动的顺利进行。</p>
+                <ul class="unit-features">
+                    <li><i class="fas fa-check"></i> 后勤保障与物资运输</li>
+                    <li><i class="fas fa-check"></i> 通信与信息技术支持</li>
+                    <li><i class="fas fa-check"></i> 工程保障与战场建设</li>
+                    <li><i class="fas fa-check"></i> 医疗救护与卫生防疫</li>
+                    <li><i class="fas fa-check"></i> 火力支援与防空作战</li>
+                </ul>
+                <a href="#" class="unit-button">了解更多</a>
+            </div>
+        </div>
+        
+        <!-- 申请表单 -->
+        <div class="application-section" id="application">
+            <h2>参军报名申请表</h2>
+            <form id="recruitment-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id-number">身份证号</label>
+                        <input type="text" id="id-number" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="birthdate">出生日期</label>
+                        <input type="date" id="birthdate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="education">学历</label>
+                        <select id="education" class="form-control" required>
+                            <option value="">请选择</option>
+                            <option value="高中">高中</option>
+                            <option value="大专">大专</option>
+                            <option value="本科">本科</option>
+                            <option value="硕士">硕士</option>
+                            <option value="博士">博士</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">联系电话</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">电子邮箱</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">家庭住址</label>
+                    <input type="text" id="address" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>意向部队</label>
+                    <div>
+                        <input type="radio" id="leopard" name="unit" value="猎豹突击队" required>
+                        <label for="leopard" style="display:inline;margin-left:5px;">猎豹突击队</label>
+                        
+                        <input type="radio" id="support" name="unit" value="作战支援大队" style="margin-left:20px;">
+                        <label for="support" style="display:inline;margin-left:5px;">作战支援大队</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="experience">相关经历与特长</label>
+                    <textarea id="experience" class="form-control" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button" id="submit-btn">
+                    <span id="submit-text">提交报名申请</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>中国人民解放军征兵办公室负责全国征兵工作，致力于选拔优秀青年加入人民军队，为国防现代化建设贡献力量。</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <a href="#">征兵政策</a>
+                <a href="#">体检标准</a>
+                <a href="#">政治考核</a>
+                <a href="#">优待政策</a>
+                <a href="#">军营生活</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>联系我们</h3>
+                <p>地址：北京市西城区旌勇里3号</p>
+                <p>征兵咨询热线：12345</p>
+                <p>邮箱：a2468101214_2024@qq.com</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 中国人民解放军征兵办公室 版权所有</p>
+        </div>
+    </footer>
+
+    <!-- 引入EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script>
+        // 初始化EmailJS
+        emailjs.init("IR5DCkaU68cwWaZL3");
+
+        // 表单提交处理
+        document.getElementById('recruitment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const formData = {
+                name: document.getElementById('name').value,
+                id_number: document.getElementById('id-number').value,
+                birthdate: document.getElementById('birthdate').value,
+                education: document.getElementById('education').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                unit: document.querySelector('input[name="unit"]:checked').value,
+                experience: document.getElementById('experience').value,
+                date: new Date().toLocaleString('zh-CN')
+            };
+            
+            // 显示加载状态
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            submitBtn.disabled = true;
+            submitText.innerHTML = '<span class="loading"></span>正在提交...';
+            
+            // 发送邮件
+            emailjs.send('service_21vrieu', 'template_tcqtlje', {
+                to_email: 'a19355076381.outlook.com',
+                from_name: formData.name,
+                from_email: formData.email,
+                message: `
+申请人姓名：${formData.name}
+身份证号：${formData.id_number}
+出生日期：${formData.birthdate}
+学历：${formData.education}
+联系电话：${formData.phone}
+电子邮箱：${formData.email}
+家庭住址：${formData.address}
+意向部队：${formData.unit}
+相关经历：${formData.experience}
+                `,
+                date: formData.date
+            })
+            .then(function(response) {
+                // 提交成功
+                alert(`感谢 ${formData.name} 提交参军申请！\n您选择的部队是：${formData.unit}\n我们将在3个工作日内与您联系。\n申请信息已发送至征兵办公室邮箱。`);
+                
+                // 重置表单
+                document.getElementById('recruitment-form').reset();
+                
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitText.textContent = '提交报名申请';
+            }, function(error) {
+                // 提交失败
+                console.log('邮件发送失败:', error);
+                
+                if (error.status === 412) {
+                    alert('模板配置错误，请确保EmailJS模板使用{{{message}}}变量。');
+                } else {
+                    alert(`提交失败，请稍后重试。错误代码：${error.status}`);
+                }
+                
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitText.textContent = '提交报名申请';
+            });
+        });
+        
+        // 通知栏滚动效果
+        const alertBar = document.querySelector('.alert-bar');
+        let scrollPos = 0;
+        
+        function scrollAlert() {
+            scrollPos -= 1;
+            if (scrollPos < -alertBar.scrollWidth) {
+                scrollPos = window.innerWidth;
+            }
+            alertBar.style.transform = `translateX(${scrollPos}px)`;
+            requestAnimationFrame(scrollAlert);
+        }
+        
+        // 启动通知栏滚动
+        scrollAlert();
+    </script>
+</body>
+</html>
